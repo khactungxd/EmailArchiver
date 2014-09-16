@@ -1,0 +1,29 @@
+html
+    head
+        title EmailArchiver
+        link(rel='stylesheet', href='/stylesheets/style.css')
+        script(src='/javascripts/jquery-1.9.0.min.js')
+        script.
+            $(document).ready( function(){
+                $('#templateSelect').change(function(){
+                    var skillSelect = document.getElementById("templateSelect");
+                    var selectedValue = skillSelect.options[skillSelect.selectedIndex].value;
+                    $("#tempid").val(selectedValue);
+                });
+            });
+    body()
+        div(id="postdiv")
+            h2(style='text-align: center') NodeJS Email Archiver
+            form(action="process",method="post",enctype="multipart/form-data",style='padding-left: 20px; padding-bottom: 10px')
+                label(for="file") EML:
+                input(type="file",name="eml",id="eml")
+                br
+                br
+                label Template:
+                input(type="hidden",name="tempName",id="tempid",value="basic1")
+                select(id= "templateSelect")
+                    option(value="basic1") basic1
+                    option(value="basic2") basic2
+                br
+                br
+                input(type="submit",name="submit",value="Convert")

@@ -1,0 +1,490 @@
+{
+  "type": "object",
+  "description": "Order information",
+  "properties": {
+    "ns2$order": {
+      "type": "object",
+      "properties": {
+        "xmlns$ns2": {
+          "type": "string",
+          "default": "http://oxseed.com/data/order"
+        },
+        "xmlns$ns3": {
+          "type": "string",
+          "default": "http://oxseed.com/data/commons/entrylist"
+        },
+        "xmlns$ns4": {
+          "type": "string",
+          "default": "http://oxseed.com/data/extension/metadata"
+        },
+        "xmlns$ns5": {
+          "type": "string",
+          "default": "http://oxseed.com/data/extension/orderdeps"
+        },
+        "id": {
+          "description": "Order ID",
+          "type": "object",
+          "properties": {
+            "$t": {
+              "type": "string"
+            }
+          }
+        },
+        "stack": {
+          "$ref": "#/definitions/Stack"
+        },
+        "actionList": {
+          "description": "List of available actions",
+          "type": "object",
+          "properties": {
+            "action": {
+              "type": "array",
+              "items": {
+                "oneOf": [
+                  {
+                    "$ref": "#/definitions/Action"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "mandant": {
+          "description": "Customer",
+          "type": "object",
+          "properties": {
+            "$t": {
+              "type": "string"
+            }
+          }
+        },
+        "inputChannel": {
+          "description": "Input channel of this order",
+          "type": "object",
+          "properties": {
+            "$t": {
+              "type": "string"
+            }
+          }
+        },
+        "exportChannel": {
+          "description": "Export channel of this order",
+          "type": "object",
+          "properties": {
+            "$t": {
+              "type": "string"
+            }
+          }
+        },
+        "additionalOrderInfo": {
+          "$ref": "#/definitions/AnyMap"
+        }
+      }
+    }
+  },
+
+  "definitions": {
+    "Stack": {
+      "description": "Stack information",
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "Order ID",
+          "type": "object",
+          "properties": {
+            "$t": {
+              "type": "string"
+            }
+          }
+        },
+        "processList": {
+          "description": "Process information",
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "process": {
+                    "$ref": "#/definitions/Process"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "additionalStackInfo": {
+          "$ref": "#/definitions/AnyMap"
+        }
+      }
+    },
+
+    "Process": {
+      "description": "Process information as a part of Stack",
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "Order ID",
+          "type": "object",
+          "properties": {
+            "$t": {
+              "type": "string"
+            }
+          }
+        },
+        "documentList": {
+          "description": "Document list information",
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "document": {
+                    "$ref": "#/definitions/Document"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "actionList": {
+          "description": "List of available actions",
+          "type": "object",
+          "properties": {
+            "action": {
+              "type": "array",
+              "items": {
+                "oneOf": [
+                  {
+                    "$ref": "#/definitions/Action"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "processType": {
+          "description": "Process type defined by user - as text",
+          "type": "object",
+          "properties": {
+            "$t": {
+              "type": "string"
+            }
+          }
+        },
+        "processPriority": {
+          "description": "Process priority defined by user",
+          "type": "object",
+          "properties": {
+            "$t": {
+              "type": "string"
+            }
+          }
+        },
+        "indexData": {
+          "$ref": "#/definitions/IndexData"
+        },
+        "additionalProcessInfo": {
+          "$ref": "#/definitions/AnyMap"
+        },
+        "systemMessages": {
+          "type": "object"
+        }
+      }
+    },
+
+    "Document": {
+      "description": "Document information contains an ID of document and list of pages",
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "ID of document",
+          "type": "object",
+          "properties": {
+            "$t": {
+              "type": "string"
+            }
+          }
+        },
+        "idType": {
+          "description": "type used in ID of document",
+          "type": "object",
+          "properties": {
+            "$t": {
+              "type": "string"
+            }
+          }
+        },
+        "actionList": {
+          "description": "List of available actions",
+          "type": "object",
+          "properties": {
+            "action": {
+              "type": "array",
+              "items": {
+                "oneOf": [
+                  {
+                    "$ref": "#/definitions/Action"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "inputFileNameList": {
+          "description": "List of name of files read from input folder - delete it after save",
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "inputFileName": {
+                    "type": "object",
+                    "properties": {
+                      "$t": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "tempFileNameList": {
+          "description": "List of files in temporary directory - delete it after save",
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "tempFileName": {
+                    "type": "object",
+                    "properties": {
+                      "$t": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "inputType": {
+          "description": "Input file type",
+          "type": "object",
+          "properties": {
+            "$t": {
+              "type": "string"
+            }
+          }
+        },
+        "documentType": {
+          "description": "Document type",
+          "type": "object",
+          "properties": {
+            "$t": {
+              "type": "string"
+            }
+          }
+        },
+        "indexData": {
+          "$ref": "#/definitions/IndexData"
+        },
+        "additionalDocumentInfo": {
+          "$ref": "#/definitions/AnyMap"
+        }
+      }
+    },
+
+    "Action": {
+      "description": "Action information",
+      "type": "object",
+      "properties": {
+        "condition": {
+          "description": "Action test x-path expression",
+          "type": "object",
+          "properties": {
+            "$t": {
+              "type": "string"
+            }
+          }
+        },
+        "name": {
+          "type": "object",
+          "description": "Name of action",
+          "properties": {
+            "$t": {
+              "type": "string"
+            }
+          }
+        },
+        "creationDate": {
+          "type": "object",
+          "description": "Date of creation",
+          "properties": {
+            "$t": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        },
+        "createdBy": {
+          "type": "object",
+          "description": "User who create this action",
+          "properties": {
+            "$t": {
+              "type": "string"
+            }
+          }
+        },
+        "status": {
+          "$ref": "#/definitions/ActionStatus"
+        },
+        "statusDescription": {
+          "description": "Description of current status - it's not necessary. It can contains error description",
+          "type": "object",
+          "properties": {
+            "$t": {
+              "type": "string"
+            }
+          }
+        },
+        "updateDate": {
+          "description": "Date status was changed",
+          "type": "object",
+          "properties": {
+            "$t": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        },
+        "updateBy": {
+          "description": "Name of service or user who update the status of action",
+          "type": "object",
+          "properties": {
+            "$t": {
+              "type": "string"
+            }
+          }
+        },
+        "priority": {
+          "description": "Priority of this action",
+          "type": "object",
+          "properties": {
+            "$t": {
+              "type": "number"
+            }
+          }
+        },
+        "argumentList": {
+          "description": "User arguments for specific action",
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "argument": {
+                    "type": "object",
+                    "properties": {
+                      "$t": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+
+    "IndexField": {
+      "description": "An index field and its value",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "object",
+          "properties": {
+            "$t": {
+              "type": "string"
+            }
+          }
+        },
+        "value": {
+          "type": "object",
+          "properties": {
+            "$t": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+
+    "IndexFieldList": {
+      "type": "object",
+      "properties": {
+        "indexField": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/IndexField"
+              }
+            ]
+          }
+        }
+      }
+    },
+
+    "IndexData": {
+      "description": "Information about indexed data",
+      "type": "object",
+      "properties": {
+        "indexFieldList": {
+          "$ref": "#/definitions/IndexFieldList"
+        }
+      }
+    },
+
+    "ActionStatus": {
+      "type": "object",
+      "properties": {
+        "$t": {
+          "type": "string",
+          "enum": ["Active", "Error", "Done", "Initial", "Failure"]
+        }
+      }
+    },
+
+    "AnyMap": {
+      "type": "object",
+      "properties": {
+        "mapEntry": {
+          "type": "object",
+          "properties": {
+            "key": {
+              "type": "object",
+              "properties": {
+                "$t": {
+                  "type": "string"
+                }
+              }
+            },
+            "value": {
+              "type": "array"
+            }
+          }
+        }
+      }
+    }
+  }
+}

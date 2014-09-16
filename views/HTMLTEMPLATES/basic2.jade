@@ -1,0 +1,88 @@
+html
+    head
+        title Email
+        link(rel='stylesheet', href='/stylesheets/style.css')
+        script(src='/javascripts/jquery-1.9.0.min.js')
+        script(src='javascripts/jscolor/jscolor.js')
+        script.
+            $(document).ready( function(){
+                $('#templateSelect').change(function(){
+                    var skillSelect = document.getElementById("templateSelect");
+                    var selectedValue = skillSelect.options[skillSelect.selectedIndex].value;
+                    $("#tempId").val(selectedValue);
+                    $( "#formEml" ).submit();
+                });
+
+                $('#textstyleSelect').change(function(){
+                      var textstyleSelect = document.getElementById("textstyleSelect");
+                      var textstyleValue = textstyleSelect.options[textstyleSelect.selectedIndex].value;
+                      $("#textstyleSelect_input").val(textstyleValue);
+                });
+            });
+    body(style='background:white !important; width:1024px !important;')
+        div(style='background:#B5C6B1 !important; font-weight: #{ObjectJS.textstyle}; border-style: solid;border-width: 1px;border-color: #{ObjectJS.colorboderhead}; padding: 10px; color: #{ObjectJS.colortexthead}')
+            p(id='from') From: #{eml.from}
+            p Subject: #{eml.subject}
+        hr
+        div(id="attachments")
+            table
+                tr
+                    - if(eml.attachments != undefined){
+                        label Attachments:
+                        - for (var i = 0; i < eml.attachments.length; i++) {
+                        form(id="attEml", method="POST", action="att")
+                            input(type="hidden", id="attName", name="attName", value= eml.attachments[i].name)
+                            input(type="submit", value= eml.attachments[i].name)
+                        - }
+                    - }
+                br
+        hr
+    body
+        div(style='margin: 2px;border-style: solid;border-width: 1px;border-color: #{ObjectJS.colorboderbody};padding: 10px;height: 100%', id="emlContent")
+            p !{eml.bodyContent}
+        br
+        - if(eml2 != undefined && eml2.attachments != undefined){
+        div(style='border-style: solid;border-width: 1px;border-color: #616161; border-radius:4px')
+            label Attachments:
+            ul(style='display: block;list-style: none;border: 2px;border-color: #616161; border-radius:4px; padding-bottom:20px')
+                - for (var i = 0; i < eml2.attachments.length; i++) {
+                    li(style='float: left;width: 200px; margin-right: 20px;border: 1px;background:#eee; border-radius:4px; text-align:center') #{eml2.attachments[i].name}
+                - }
+        - }
+        div(id="changetemp_hidden")
+            form(id="formEml", method="POST", action="process")
+                input(type="hidden", id="tempId", name="tempId", value="basic1")
+            label ChangeTemplate:
+            select(id= "templateSelect")
+                option(value="basic1") basic1
+                option(value="basic2" selected) basic2
+            br
+            hr
+            br
+        div(id="changejs_hidden")
+            label Select Effect:
+            form(id="js", method="POST", action="process")
+                input(type="hidden", id="textstyleSelect_input", name="textstyleSelect_input", value="basic1")
+
+                label TextStyleOfHeader:
+                select(id= "textstyleSelect")
+                    option(value="bold") Bold
+                    option(value="normal") Normal
+                label TextHead_Corlor:
+                    input(class="color", name="TextHeadColor", size="7")
+                label BoderHeader_Corlor:
+                    input(class="color", name="BoderHeadColor", size="7")
+                label BorderBody_Color:
+                    input(class="color", name="BoderBodyColor", size="7")
+                input(type="submit", value="Apply Effect")
+            br
+            hr
+            br
+            table
+                tr
+                    td
+                        form(id="formEml", method="POST", action="pdf")
+                            input(type="hidden", id="tempId", name="tempId", value="basic2")
+                            input(type="submit", value="Download PDF")
+                    td
+                        button(onclick='window.print()') Print
